@@ -6,10 +6,8 @@ let express = require("express");
 let WebSocket = require("ws");
 let app = express();
 
-let {WebSocketClient} = require("../../client/js/WebSocketClient.js");
-let {BootstrapStep}   = require("../../client/js/BootstrapStep.js");
-
-
+let {WebSocketClient} = require("../client/js/WebSocketClient.js");
+let {BootstrapStep}   = require("../client/js/BootstrapStep.js");
 
 let wss = new WebSocket.Server({ port: 2019 });
 console.log("whatsapp-web-reveng API server listening on port 2019");
