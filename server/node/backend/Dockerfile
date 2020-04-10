@@ -6,8 +6,8 @@ RUN apt-get update
 # RUN apt-get -y install python-pip
 
 # Create app dir
-RUN mkdir /www/node
-WORKDIR /www/node
+RUN mkdir node
+WORKDIR /node
 
 # COPY project in app dir
 COPY . .

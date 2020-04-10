@@ -1,11 +1,13 @@
 FROM python:2.7
 
+RUN apt-get update
+
 # Install pip
 RUN apt-get -y install python-pip
 
 # Create app dir
-RUN mkdir /www/python
-WORKDIR /www/python
+RUN mkdir python
+WORKDIR /python
 
 # COPY project in app dir
 COPY . .
