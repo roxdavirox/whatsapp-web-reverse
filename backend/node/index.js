@@ -6,8 +6,8 @@ let express = require("express");
 let WebSocket = require("ws");
 let app = express();
 
-let {WebSocketClient} = require("./client/js/WebSocketClient.js");
-let {BootstrapStep}   = require("./client/js/BootstrapStep.js");
+let {WebSocketClient} = require("../../client/js/WebSocketClient.js");
+let {BootstrapStep}   = require("../../client/js/BootstrapStep.js");
 
 
 
