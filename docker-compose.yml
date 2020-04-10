@@ -2,16 +2,16 @@ version: '3'
 
 services:
   node:
-      build: ./backend/node/
+      build: ./server/node/backend/
       ports:
         - "2018:2018" #node http port
         - "2019:2019" #node wsocket port
       volumes: 
-        - ./backend/node/:/www/node
+        - ./server/node/backend/:/node/backend
 
   python:
-    build: ./backend/python/
+    build: ./server/python/
     ports:
       - "2020:2020"
     volumes:
-      - ./backend/python/:/www/python
+      - ./server/python/:/python

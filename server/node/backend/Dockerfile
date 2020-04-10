@@ -8,17 +8,21 @@ RUN apt-get update
 # Create app dir
 RUN mkdir node
 WORKDIR /node
+RUN mkdir backend
+WORKDIR /node/backend
 
 # COPY project in app dir
 COPY . .
 
+WORKDIR /node
+RUN mkdir client
+WORKDIR /node/client
+COPY ../client/ .
+
+WORKDIR /node/backend
 # Install dependencies
 ### Using NPM
 RUN npm install
-# RUN npm install -g concurrently
-
-# Pip requirements
-# RUN pip install -r requirements.txt
 
 EXPOSE 2018 2019
 # Command
