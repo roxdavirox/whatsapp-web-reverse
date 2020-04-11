@@ -5,6 +5,7 @@ from __future__ import print_function;
 import sys;
 sys.dont_write_bytecode = True;
 
+import server_reloader
 import os;
 import base64;
 import time;
@@ -105,6 +106,20 @@ class WhatsAppWeb(WebSocket):
         whatsapp.disconnect();
         eprint(self.address, "closed connection to backend");
 
-server = SimpleWebSocketServer("", 2020, WhatsAppWeb);
-eprint("[PYTHON SERVER] - whatsapp-web-backend listening on port 2020");
-server.serveforever();
+
+
+
+def run_server():
+    server = SimpleWebSocketServer("", 2020, WhatsAppWeb);
+    eprint("[PYTHON SERVER] - whatsapp-web-backend listening on port 2029");
+    server.serveforever();
+    pass
+
+def main():
+    server_reloader.main(# https://pypi.org/project/server-reloader/0.1.3/
+        run_server,
+        before_reload=lambda: print('Reloading code…')
+    )
+
+if __name__ == '__main__':
+    main()

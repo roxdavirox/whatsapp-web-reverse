@@ -4,3 +4,4 @@ curve25519-donna
 pycrypto
 pyqrcode
 protobuf
+server-reloader
