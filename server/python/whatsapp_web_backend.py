@@ -106,5 +106,5 @@ class WhatsAppWeb(WebSocket):
         eprint(self.address, "closed connection to backend");
 
 server = SimpleWebSocketServer("", 2020, WhatsAppWeb);
-eprint("whatsapp-web-backend listening on port 2020");
+eprint("[python] whatsapp-web-backend listening on port 2020");
 server.serveforever();

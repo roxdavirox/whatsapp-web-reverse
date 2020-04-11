@@ -6,11 +6,11 @@ let express = require("express");
 let WebSocket = require("ws");
 let app = express();
 
-let {WebSocketClient} = require("../client/js/WebSocketClient.js");
-let {BootstrapStep}   = require("../client/js/BootstrapStep.js");
+let {WebSocketClient} = require("./client/js/WebSocketClient.js");
+let {BootstrapStep}   = require("./client/js/BootstrapStep.js");
 
 let wss = new WebSocket.Server({ port: 2019 });
-console.log("whatsapp-web-reveng API server listening on port 2019");
+console.log("[node] whatsapp-web-reveng API server listening on port 2019");
 
 let backendInfo = {
     url: "ws://localhost:2020",
@@ -208,5 +208,5 @@ wss.on("connection", function(clientWebsocketRaw, req) {
 app.use(express.static("client"));
 
 app.listen(2018, function() {
-    console.log("whatsapp-web-reveng HTTP server listening on port 2018");
+    console.log("[node] whatsapp-web-reveng HTTP server listening on port 2018");
 });

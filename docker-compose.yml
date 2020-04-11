@@ -1,17 +1,25 @@
 version: '3'
 
 services:
-  node:
-      build: ./server/node/backend/
+  nodeserver:
+      build: ./server/node/
       ports:
         - "2018:2018" #node http port
         - "2019:2019" #node wsocket port
       volumes: 
-        - ./server/node/backend/:/node/backend
+        - ./server/node/:/usr/node
+      networks: 
+        - local
 
-  python:
+  pythonserver:
     build: ./server/python/
-    ports:
-      - "2020:2020"
+    networks: 
+      - local
+    # ports:
+    #   - "2020:2020"
     volumes:
-      - ./server/python/:/python
+      - ./server/python/:/usr/python
+
+networks: 
+  local:
+    driver: bridge
