@@ -2,11 +2,9 @@ FROM node
 
 RUN apt-get update
 
-# Create app dir
-# RUN mkdir code
 WORKDIR /usr/app
 
-# COPY package*.json ./
+COPY package*.json ./
 COPY . .
 RUN npm install
 

@@ -9,7 +9,7 @@ services:
         - "2018:2018" #node http port
         - "2019:2019" #node wsocket port
       volumes: 
-        - ./server/node/:/usr/app
+        - ./server/node:/usr/app
         - /usr/app/node_modules
 
   pythonserver:

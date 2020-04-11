@@ -111,7 +111,7 @@ class WhatsAppWeb(WebSocket):
 
 def run_server():
     server = SimpleWebSocketServer("", 2020, WhatsAppWeb);
-    eprint("[PYTHON SERVER] - whatsapp-web-backend listening on port 2029");
+    eprint("[PYTHON SERVER] - whatsapp-web-backend listening on port 2020");
     server.serveforever();
     pass
 
