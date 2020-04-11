@@ -226,7 +226,7 @@ class WhatsAppWebClient:
                                                on_open = lambda ws: self.onOpen(ws),
                                                on_close = lambda ws: self.onClose(ws),
                                                header = { "Origin: https://web.whatsapp.com" });
-        self.activeWs.run_forever(http_proxy_host="127.0.0.1", http_proxy_port=1087);
+        # self.activeWs.run_forever(http_proxy_host="127.0.0.1", http_proxy_port=1087);
         self.websocketThread = Thread(target = self.activeWs.run_forever);
         self.websocketThread.daemon = True;
         self.websocketThread.start();

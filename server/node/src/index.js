@@ -13,7 +13,7 @@ let wss = new WebSocket.Server({ port: 2019 });
 console.log("[node] whatsapp-web-reveng API server listening on port 2019");
 
 let backendInfo = {
-    url: "ws://localhost:2020",
+    url: "ws://173.17.0.2:2020",
     timeout: 10000
 };
 
