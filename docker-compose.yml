@@ -1,25 +1,20 @@
-version: '3'
+version: "3"
 
 services:
   nodeserver:
-      build: ./server/node/
+      build: 
+        context: ./server/node/
+        dockerfile: Dockerfile
       ports:
         - "2018:2018" #node http port
         - "2019:2019" #node wsocket port
       volumes: 
-        - ./server/node/:/usr/node
-      networks: 
-        - local
+        - ./server/node/:/usr/app
+        - /usr/app/node_modules
 
   pythonserver:
     build: ./server/python/
-    networks: 
-      - local
-    # ports:
-    #   - "2020:2020"
+    ports:
+      - "2020:2020"
     volumes:
-      - ./server/python/:/usr/python
-
-networks: 
-  local:
-    driver: bridge
+      - ./server/python:/usr/app

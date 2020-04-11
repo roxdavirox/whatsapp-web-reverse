@@ -6,8 +6,7 @@ RUN apt-get update
 RUN apt-get -y install python-pip
 
 # Create app dir
-RUN mkdir python
-WORKDIR /python
+WORKDIR /usr/app
 
 # COPY project in app dir
 COPY . .

@@ -2,22 +2,14 @@ FROM node
 
 RUN apt-get update
 
-# Install pip
-# RUN apt-get -y install python-pip
-
 # Create app dir
-RUN mkdir node
-WORKDIR /node
+# RUN mkdir code
+WORKDIR /usr/app
 
-# COPY project in app dir
+# COPY package*.json ./
 COPY . .
-
-# Install dependencies
-### Using NPM
 RUN npm install
 
 EXPOSE 2018 2019
-# Command
-## Yarn
-#CMD yarn __run_in_docker
+
 CMD npm start
