@@ -9,10 +9,11 @@ let app = express();
 let {WebSocketClient} = require("../client/js/WebSocketClient.js");
 let {BootstrapStep}   = require("../client/js/BootstrapStep.js");
 let host = process.env.HOST || 'localhost';
-console.log('[node/ws] HOST: ', host);
+let wsHost = `ws://${host}`;
+console.log('[node/ws] wsHost: ', wsHost);
 
 let wss = new WebSocket.Server({ host ,port: 2019 });
-console.log("[node] whatsapp-web-reveng API server listening on port 2019");
+console.log("[node] API server port: 2019");
 
 let backendInfo = {
     url: "ws://173.17.0.2:2020", //internal docker networks
@@ -209,5 +210,5 @@ wss.on("connection", function(clientWebsocketRaw, req) {
 app.use(express.static("client"));
 
 app.listen(2018, function() {
-    console.log("[NODE SERVER] - whatsapp-web-reveng HTTP server listening on port 2018");
+    console.log("[NODE SERVER] - HTTP server port: 2018");
 });

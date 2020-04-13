@@ -9,7 +9,7 @@ services:
       - "2018:2018" #node http port
       - "2019:2019" #node wsocket port
     environment: 
-      - HOST: 192.34.61.185
+      - HOST=192.34.61.185
     volumes: 
       - ./server/node:/usr/app
       - /usr/app/node_modules
