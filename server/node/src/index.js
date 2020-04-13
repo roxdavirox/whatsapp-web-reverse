@@ -9,10 +9,8 @@ let app = express();
 let {WebSocketClient} = require("../client/js/WebSocketClient.js");
 let {BootstrapStep}   = require("../client/js/BootstrapStep.js");
 let host = process.env.HOST || 'localhost';
-let wsHost = `ws://${host}`;
-console.log('[node/ws] wsHost: ', wsHost);
 
-let wss = new WebSocket.Server({ host ,port: 2019 });
+let wss = new WebSocket.Server({ port: 2019 });
 console.log("[node] API server port: 2019");
 
 let backendInfo = {
