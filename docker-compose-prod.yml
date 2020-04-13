@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  nodeserver:
+    build: 
+      context: ./server/node/
+      dockerfile: Dockerfile
+    ports:
+      - "2018:2018" #node http port
+      - "2019:2019" #node wsocket port
+    environment: 
+      - HOST: 192.34.61.185
+    volumes: 
+      - ./server/node:/usr/app
+      - /usr/app/node_modules
+    networks:
+      - webproxy
+
+  pythonserver:
+    build: ./server/python/
+    ports:
+      - "2020:2020"
+    volumes:
+      - ./server/python:/usr/app
+    networks:
+      webproxy:
+        ipv4_address: 173.17.0.2
+
+networks:
+  webproxy:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 173.17.0.0/24
