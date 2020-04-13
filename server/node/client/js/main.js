@@ -24,7 +24,7 @@ $(document).ready(function() {
     let bootstrapState = 0;
     
 
-    let socketUrl = `ws://${window.location.hostname}}:2019`
+    let socketUrl = `ws://${window.location.hostname}:2019`
     let apiInfo = {
         url: socketUrl,
         timeout: 10000,
