@@ -24,9 +24,9 @@ $(document).ready(function() {
     let bootstrapState = 0;
     
 
-
+    let socketUrl = `ws://${process.env.HOST || 'localhost'}:2019`
     let apiInfo = {
-        url: "ws://localhost:2019",
+        url: socketUrl,
         timeout: 10000,
         errors: {
             basic: {
