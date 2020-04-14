@@ -5,14 +5,16 @@ let {StringDecoder} = require("string_decoder");
 let express = require("express");
 let WebSocket = require("ws");
 let app = express();
-
+require('dotenv').config();
 let {WebSocketClient} = require("../client/js/WebSocketClient.js");
 let {BootstrapStep}   = require("../client/js/BootstrapStep.js");
-let hostWs = '173.17.0.2'; //internal docker networks 
+let hostWs = process.env.HOST_WS || '173.17.0.2'; //internal docker networks 
 
 let wss = new WebSocket.Server({ port: 2019 });
+console.log(`[node] hostWS ws://${hostWs}:2020`);
 console.log("[node] WS server port: 2019");
 
+// ref to local: https://stackoverflow.com/questions/35199384/node-js-error-connect-econnrefused-response-from-server
 let backendInfo = {
     url: `ws://${hostWs}:2020`, //internal docker networks
     timeout: 10000
@@ -22,6 +24,7 @@ wss.on("connection", function(clientWebsocketRaw, req) {
     let backendWebsocket = new WebSocketClient();
     let clientWebsocket = new WebSocketClient().initializeFromRaw(clientWebsocketRaw, "api2client", {getOnMessageData: msg => new StringDecoder("utf-8").write(msg.data)});
     clientWebsocket.send({ type: "connected" });
+    console.log('[node] conectado ao websocket node');
     //clientWebsocket.onClose(() => backendWebsocket.disconnect());
 
     clientWebsocket.waitForMessage({
@@ -30,6 +33,7 @@ wss.on("connection", function(clientWebsocketRaw, req) {
     }).then(clientCallRequest => {
         if(backendWebsocket.isOpen)
             return;
+        console.log(backendInfo);
         new BootstrapStep({
             websocket: backendWebsocket,
             actor: websocket => {
