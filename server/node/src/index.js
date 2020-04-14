@@ -8,13 +8,13 @@ let app = express();
 
 let {WebSocketClient} = require("../client/js/WebSocketClient.js");
 let {BootstrapStep}   = require("../client/js/BootstrapStep.js");
-let host = process.env.HOST || 'localhost';
+let hostWs = '173.17.0.2'; //internal docker networks 
 
 let wss = new WebSocket.Server({ port: 2019 });
 console.log("[node] WS server port: 2019");
 
 let backendInfo = {
-    url: "ws://173.17.0.2:2020", //internal docker networks
+    url: `ws://${hostWs}:2020`, //internal docker networks
     timeout: 10000
 };
 
