@@ -22,8 +22,8 @@ import traceback
 import websocket
 import curve25519
 import pyqrcode
-from utilities import *
-from whatsapp_binary_reader import whatsappReadBinary
+from utils import *
+from binary_reader import whatsappReadBinary
 
 sys.dont_write_bytecode = True
 WHATSAPP_WEB_VERSION = "0,4,2088"

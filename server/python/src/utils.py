@@ -55,5 +55,3 @@ def ceil(n):											# from https://stackoverflow.com/a/32559239
 def floor(n):
 	res = int(n)
 	return res if res == 0 or n >= 0 else res - 1
-
-print('ola')
