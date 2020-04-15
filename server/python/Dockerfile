@@ -18,4 +18,4 @@ EXPOSE 2020
 # Command
 ## Yarn
 #CMD yarn __run_in_docker
-CMD python whatsapp_web_backend.py
+CMD python src/app.py
