@@ -14,7 +14,7 @@ import traceback
 
 from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
 from whatsapp import WhatsAppWebClient
-from utilities import *
+from utils import *
 
 reload(sys)
 sys.setdefaultencoding("utf-8")
