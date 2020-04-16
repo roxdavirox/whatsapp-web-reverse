@@ -155,7 +155,9 @@ class WhatsAppWebClient:
         try:
             messageSplit = message.split(",", 1)
             messageTag = messageSplit[0]
-            messageContent = messageSplit[1]
+            messageContent = ""
+            if len(messageSplit) >= 2:
+                messageContent = messageSplit[1]
 
             if messageTag in self.messageQueue:
                 # when the server responds to a client's message
