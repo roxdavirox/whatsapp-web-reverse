@@ -3,6 +3,7 @@ let fs = require("fs");
 let path = require("path");
 let {StringDecoder} = require("string_decoder");
 let express = require("express");
+let cors = require('cors');
 let WebSocket = require("ws");
 let app = express();
 require('dotenv').config();
@@ -22,9 +23,15 @@ let backendInfo = {
 
 wss.on("connection", function(clientWebsocketRaw, req) {
     let backendWebsocket = new WebSocketClient();
-    let clientWebsocket = new WebSocketClient().initializeFromRaw(clientWebsocketRaw, "api2client", {getOnMessageData: msg => new StringDecoder("utf-8").write(msg.data)});
+    let clientWebsocket = new WebSocketClient()
+        .initializeFromRaw(
+            clientWebsocketRaw,
+            "api2client", {
+                getOnMessageData: msg => new StringDecoder("utf-8").write(msg.data)
+            }
+        );
     clientWebsocket.send({ type: "connected" });
-    console.log('[node] conectado ao websocket node');
+    console.log('[node] Client conectado ao websocket node');
     //clientWebsocket.onClose(() => backendWebsocket.disconnect());
 
     clientWebsocket.waitForMessage({
@@ -37,7 +44,14 @@ wss.on("connection", function(clientWebsocketRaw, req) {
         new BootstrapStep({
             websocket: backendWebsocket,
             actor: websocket => {
-                websocket.initialize(backendInfo.url, "api2backend", {func: WebSocket, args: [{ perMessageDeflate: false }], getOnMessageData: msg => new StringDecoder("utf-8").write(msg.data)});
+                websocket.initialize(
+                    backendInfo.url,
+                    "api2backend", {
+                        func: WebSocket, 
+                        args: [{ perMessageDeflate: false }], 
+                        getOnMessageData: msg => new StringDecoder("utf-8").write(msg.data)
+                    }
+                );
                 websocket.onClose(() => {
                     clientWebsocket.send({ type: "resource_gone", resource: "backend" });
                 });
@@ -207,7 +221,7 @@ wss.on("connection", function(clientWebsocketRaw, req) {
     //});
 })
 
-
+app.use(cors({ origin : true, credentials : true }));
 
 app.use(express.static("client"));
 

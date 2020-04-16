@@ -152,13 +152,7 @@ $(document).ready(function() {
                             keepWhenHit: true
                         }).then(whatsAppMessage => {
                             bootstrapInfo.deactivate();
-                            /*<tr>
-                                <th scope="row">1</th>
-                                <td>Do., 21.12.2017, 22:59:09.123</td>
-                                <td>Binary</td>
-                                <td class="fill no-monospace"><button class="btn">View</button></td>
-                            </tr>*/
-
+                           
                             let d = whatsAppMessage.data;
                             let viewJSONButton = $("<button></button>").addClass("btn").html("View").click(function() {
                                 let messageIndex = parseInt($(this).parent().parent().attr("data-message-index"));
