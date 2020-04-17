@@ -18,7 +18,7 @@ from Crypto.Hash import SHA256
 import hashlib
 import hmac
 import traceback
-
+from websocket._exceptions import WebSocketConnectionClosedException
 import websocket
 import curve25519
 import pyqrcode
@@ -119,6 +119,7 @@ class WhatsAppWebClient:
         "sharedSecret": None,
         "me": None
     }
+    connectionStarted = False
 
     def __init__(self, onOpenCallback, onMessageCallback, onCloseCallback):
         self.onOpenCallback = onOpenCallback
@@ -144,12 +145,16 @@ class WhatsAppWebClient:
         if self.onCloseCallback is not None and "func" in self.onCloseCallback:
             self.onCloseCallback["func"](self.onCloseCallback)
         eprint("WhatsApp backend Websocket closed.")
-
+        self.connectionStarted = False
     def keepAlive(self):
-        if self.activeWs is not None:
-            self.activeWs.send("?,,")
-            eprint("?,,")
-            Timer(20.0, self.keepAlive).start()
+        try:
+            if self.activeWs is not None:
+                self.activeWs.send("?,,")
+                eprint("?,,")
+                Timer(20.0, self.keepAlive).start()
+        except WebSocketConnectionClosedException:
+            eprint('Keep Alive connection closed')
+            self.connectionStarted = False
 
     def onMessage(self, ws, message):
         try:
@@ -274,7 +279,9 @@ class WhatsAppWebClient:
                                 "logged in as "
                                 + jsonObj[1]["pushname"]
                                 + " (" + jsonObj[1]["wid"] + ")")
-                            Timer(25, self.keepAlive).start() # Keepalive Request
+                            if self.connectionStarted is False:
+                                self.connectionStarted = True
+                                Timer(25, self.keepAlive).start() # Keepalive Request
                         elif jsonObj[0] == "Stream":
                             pass
                         elif jsonObj[0] == "Props":
