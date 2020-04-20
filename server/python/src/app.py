@@ -46,7 +46,6 @@ class WhatsAppWeb(WebSocket):
             tag = self.data.split(",", 1)[0]
             obj = json.loads(self.data[len(tag)+1:])
 
-            eprint(obj)
             if "from" not in obj or obj["from"] != "api2backend" or \
                 "type" not in obj or not \
                     (("command" in obj and
@@ -114,8 +113,8 @@ class WhatsAppWeb(WebSocket):
                     elif cmd == "backend-getConnectionInfo":
                         currWhatsAppInstance.getConnectionInfo(callback)
                     elif cmd == "backend-SendWhatsAppMessage":
-                        eprint("Mensagem enviada:")
                         payload = obj["payload"]
+                        eprint("Mensagem enviada")
                         currWhatsAppInstance.sendTextMessage(payload["id"], payload["msg"])
                     elif cmd == "backend-disconnectWhatsApp":
                         currWhatsAppInstance.disconnect()
