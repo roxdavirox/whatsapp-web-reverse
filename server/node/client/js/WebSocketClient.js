@@ -12,7 +12,8 @@ class WebSocketClient {
                     connectionFailed: "Connection failed",
                     invalidResponse: "Invalid response",
                 }
-            }
+            },
+            requestInfo: { }
         };
         if(url != undefined  &&  whoami != undefined)
             initialize(url, whoami);
@@ -24,6 +25,7 @@ class WebSocketClient {
             let actualMsg = this.constructorConfig.getOnMessageData ? this.constructorConfig.getOnMessageData(msg) : msg;
             let tag = actualMsg.split(",")[0];
             let obj = JSON.parse(actualMsg.substr(tag.length + 1));
+            this.info.requestInfo = { ...obj };
             console.log("got message ", obj);
 
             let idx = this.expectedMsgs.findIndex(e => e.condition(obj, tag));
@@ -61,7 +63,9 @@ class WebSocketClient {
         this._initializeWebSocketListeners();
         return this;
     }
-
+    getRequestInfo() {
+        return this.info.requestInfo
+    }
     initializeFromRaw(ws, whoami, constructorConfig) {
         this.expectedMsgs = [];
         this.whoami = whoami;

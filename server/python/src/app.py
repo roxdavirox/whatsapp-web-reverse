@@ -42,7 +42,7 @@ class WhatsAppWeb(WebSocket):
 
     def handleMessage(self):
         try:
-            eprint(self.data)
+            eprint("handle data:" + self.data)
             tag = self.data.split(",", 1)[0]
             obj = json.loads(self.data[len(tag)+1:])
 
@@ -113,6 +113,8 @@ class WhatsAppWeb(WebSocket):
                         currWhatsAppInstance.getLoginInfo(callback)
                     elif cmd == "backend-getConnectionInfo":
                         currWhatsAppInstance.getConnectionInfo(callback)
+                    elif cmd == "backend-SendWhatsAppMessage":
+                        eprint("enviar mensagem aqui")
                     elif cmd == "backend-disconnectWhatsApp":
                         currWhatsAppInstance.disconnect()
                         self.sendJSON({

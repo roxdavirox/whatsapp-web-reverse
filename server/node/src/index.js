@@ -149,6 +149,40 @@ wss.on("connection", function(clientWebsocketRaw, req) {
         })
     }).run();
 
+    clientWebsocket.waitForMessage({
+        condition: obj => obj.from == "client"  &&  obj.type == "call"  &&  obj.command == "backend-SendWhatsAppMessage",
+        keepWhenHit: true
+    }).then(clientCallRequest => {
+        if(!backendWebsocket.isOpen) {
+            clientCallRequest.respond({ type: "error", reason: "No backend connected." });
+            return;
+        }
+        console.log('REQUESTINFO: ', clientWebsocket.getRequestInfo());
+        const { payload } = clientWebsocket.getRequestInfo();
+        new BootstrapStep({
+            websocket: backendWebsocket,
+            request: {
+                type: "call",
+                callArgs: { 
+                    command: "backend-SendWhatsAppMessage", 
+                    whatsapp_instance_id: backendWebsocket.activeWhatsAppInstanceId,
+                    payload },
+                // successCondition: obj => obj.from == "backend"  &&  obj.type == "generated_qr_code"  &&  obj.image  &&  obj.content
+            }
+        }).run(backendInfo.timeout).then(backendResponse => {
+
+            backendWebsocket.waitForMessage({
+                condition: obj => obj.type == "whatsapp_message_received"  &&  obj.message  &&  obj.message_type  &&  obj.timestamp  &&  obj.resource_instance_id == backendWebsocket.activeWhatsAppInstanceId,
+                keepWhenHit: true
+            }).then(whatsAppMessage => {
+                let d = whatsAppMessage.data;
+                clientWebsocket.send({ type: "whatsapp_message_received", message: d.message, message_type: d.message_type, timestamp: d.timestamp });
+            }).run();
+        }).catch(reason => {
+            clientCallRequest.respond({ type: "error", reason: reason });
+        })
+    }).run();
+
 
     //TODO:
     // - designated backend call function to make everything shorter
