@@ -114,7 +114,9 @@ class WhatsAppWeb(WebSocket):
                     elif cmd == "backend-getConnectionInfo":
                         currWhatsAppInstance.getConnectionInfo(callback)
                     elif cmd == "backend-SendWhatsAppMessage":
-                        eprint("enviar mensagem aqui")
+                        eprint("Mensagem enviada:")
+                        payload = obj["payload"]
+                        currWhatsAppInstance.sendTextMessage(payload["id"], payload["msg"])
                     elif cmd == "backend-disconnectWhatsApp":
                         currWhatsAppInstance.disconnect()
                         self.sendJSON({
@@ -123,7 +125,7 @@ class WhatsAppWeb(WebSocket):
                             "resource_instance_id": obj["whatsapp_instance_id"]
                             }, tag)
 
-        except (IndexError, KeyError):
+        except:
             eprint("An IndexError or KeyError occurred!")
             eprint(traceback.format_exc())
 

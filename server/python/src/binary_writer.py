@@ -1,5 +1,5 @@
-from whatsapp_defines import WATags, WASingleByteTokens, WADoubleByteTokens, WAWebMessageInfo;
-from utilities import getNumValidKeys, encodeUTF8, ceil;
+from defines import WATags, WASingleByteTokens, WADoubleByteTokens, WAWebMessageInfo;
+from utils import getNumValidKeys, encodeUTF8, ceil;
 
 
 

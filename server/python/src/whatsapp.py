@@ -22,9 +22,12 @@ from websocket._exceptions import WebSocketConnectionClosedException
 import websocket
 import curve25519
 import pyqrcode
+import binascii
 from utils import *
 from binary_reader import whatsappReadBinary
-
+from binary_writer import whatsappWriteBinary
+from Crypto import Random
+from defines import WAWebMessageInfo, WAMetrics
 sys.dont_write_bytecode = True
 WHATSAPP_WEB_VERSION = "0,4,2088"
 
@@ -344,6 +347,7 @@ class WhatsAppWebClient:
 
     def sendTextMessage(self, number, text):
         messageId = "3EB0"+binascii.hexlify(Random.get_random_bytes(8)).upper()
+        eprint("messageId " + messageId)
         messageTag = str(getTimestamp())
         messageParams = {
             "key": {
